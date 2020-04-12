@@ -7,26 +7,36 @@ import scipy.stats as ss
 
 # FUNCTIONS
 def openckdfile():
+# saving & loading text files into the program
     glucose, hemoglobin, classification = np.loadtxt('ckd.csv', delimiter=',', skiprows=1, unpack=True)
     return glucose, hemoglobin, classification
 
 def createTestCase():
+# a random test case that falls within is the minimum and maximum values of the training hemoglobin and glucose data
+# returns newglucose, newhemoglobin for the randomly generated test case
     newglucose = np.random.random(1)
     newhemoglobin = np.random.random(1)
     return newglucose, newhemoglobin
 
 def calculateDistanceArray(newglucose, newhemoglobin, glucose_scaled, hemoglobin_scaled):
+# returns the distance array (an array, the same length as glucose and hemoglobin) which contains the distance 
+# calculated to the new point (newglucose, newhemoglobin) from each point in the existing dataset
     distancearray = []
     for i in range(159):
         distancearray = np.sqrt((newglucose-glucose_scaled)**2+(newhemoglobin-hemoglobin_scaled)**2)
     return distancearray
 
 def nearestNeighborClassifier(newglucose, newhemoglobin, glucose_scaled, hemoglobin_scaled, classification_scaled):
+# returns the classification for the point nearest_class either a 1 or 0 based on the nearest neighbor
+# calls on the function calculateDistanceArray
     min_index = np.argmin(distanceArray)
     nearest_class = classification_scaled[min_index]
     return nearest_class
 
 def kNearestNeighborClassifier(k, newglucose, newhemoglobin, glucose_scaled, hemoglobin_scaled, classification_scaled):
+# returns the classification for the point newglucose, newhemoglobin either a 1 or 0 based on the k (odd int) nearest neighbors
+# the classification held by the majority of the k nearest points to the new point will be the value assigned to the new point
+# K should always be an odd number to avoid ties
     sorted_indices = np.argsort(distanceArray)
     k_indices = sorted_indices[:k]
     k_classification = classification[k_indices]
@@ -36,11 +46,13 @@ def kNearestNeighborClassifier(k, newglucose, newhemoglobin, glucose_scaled, hem
 glucose, hemoglobin, classification = openckdfile()
 
 # NORMALIZE DATA
+# used to normalize three NumPy arrays of equal length and return the three normalized arrays
 glucose_scaled = (glucose-70)/(490-70)
 hemoglobin_scaled = (hemoglobin-3.1)/(17.8-3.1)
 classification_scaled = classification
 
 # GRAPH DATA
+# a scatter plot of the glucose (Y) and hemoglobin (X) with the points graphed colored based on the classification
 plt.figure()
 plt.plot(hemoglobin_scaled[classification_scaled==1],glucose_scaled[classification_scaled==1], "k.", label = "not CKD")
 plt.plot(hemoglobin_scaled[classification_scaled==0],glucose_scaled[classification_scaled==0], "r.", label = "CKD")

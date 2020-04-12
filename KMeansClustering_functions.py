@@ -13,9 +13,11 @@ def openckdfile():
 
 # JENN'S STARTER CODE
 def select(K):
+# selects K random centroid points that fall within the range of the feature sets
     return np.random.random((K, 2))
 
 def assign(centroids, hemoglobin, glucose):
+# assigns to each data point a label based on the which centroid it is closest too --- using a method similar to the Nearest Neighbor Classification
     K = centroids.shape[0]
     distances = np.zeros((K, len(hemoglobin)))
     for i in range(K):
@@ -26,6 +28,8 @@ def assign(centroids, hemoglobin, glucose):
     return assignments
 
 def update(assignments, hemoglobin, glucose, centroids):
+# updates the location of each centroid by taking the means of all features of all observations (data points) currently assigned to that centroid
+# those means are then used as the features for the updated centroid location
     my_assignments = assignments.sort()
     K = centroids.shape[0]
     new_centroids = np.zeros((K, 2))
@@ -189,6 +193,8 @@ def update(assignments, hemoglobin, glucose, centroids):
 #    return new_centroids
 
 def iterate(assignments, new_centroids):
+# iterates by repeating the assign and update steps until an end condition is met
+# the end condition in this case is: a maximum number of iterations have happened
     i = 0
     while i < 3: # ask an input for the number of times you want to iterate at the start of program
         assignments = assign(centroids, hemoglobin, glucose)
@@ -197,6 +203,7 @@ def iterate(assignments, new_centroids):
     return assignments, new_centroids
 
 def graphingKMeans(glucose, hemoglobin, assignment, new_centroids):
+# example code provided by Jenn on how to check if our function accomplishes the right things
     plt.figure()
     for i in range(assignment.max()+1):
         rcolor = np.random.rand(3,)
@@ -208,6 +215,10 @@ def graphingKMeans(glucose, hemoglobin, assignment, new_centroids):
     plt.show() # graph looks pretty random (step 1), it'll look better when you fix update (step 3)
 
 def positivesNegatives(hemoglobin, glucose, classification, assignments):
+# True Positives Rate (Sensitivity) = what percentage of CKD patients were correctly labeled by K-Means
+# False Positives Rate = what percentage of non-CKD were incorrectly labelled by K-Means as being in the CKD cluster
+# True Negatives Rate (Specificity) = what percentage of non-CKD patients were correctly labelled by K-Means
+# False Negatives Rate = what percentage of CKD were incorrectly labelled by K-Means as being in the non-CKD cluster
     truePositives = 0
     falsePositives = 0
     trueNegatives = 0
