@@ -1,5 +1,6 @@
 # ELYSIA CHANG
 # ES2 PROJECT 2
+# APRIL 13, 2020
 # NEAREST NEIGHBOR CLASSIFICATION FUNCTIONS & MAIN SCRIPT
 
 # ******************************
@@ -13,7 +14,9 @@ import scipy.stats as ss
 
 # FUNCTIONS
 def openckdfile():
-# saving & loading text files into the program
+# saving & loading text files into the program; takes no parameters
+# opens the file "ckd.txt" and separates glucose, hemoglobin, classification
+# returns glucose, hemoglobin, classification in separate lists
     glucose, hemoglobin, classification = np.loadtxt('ckd.csv', delimiter=',', skiprows=1, unpack=True)
     return glucose, hemoglobin, classification
 
