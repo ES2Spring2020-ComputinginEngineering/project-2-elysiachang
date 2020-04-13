@@ -192,7 +192,7 @@ glucose, hemoglobin, classification = openckdfile()
 
 glucose_scaled, hemoglobin_scaled, classification = normalize(glucose, hemoglobin, classification)
 
-#newcentroids = select(2)
+newcentroids = select(2)
 
 newcentroids = generate_centroids(2)
 
@@ -211,6 +211,36 @@ final_assignments, updated_centroids = interation_data(final_assignments, update
 graphingkMeans(glucose_scaled, hemoglobin_scaled, final_assignments, updated_centroids)
 
 plusminus = positivesNegatives(classification, final_assignments)
+
+tP = plusminus[0]
+
+fP = plusminus[1]
+
+tN = plusminus[2]
+
+fN = plusminus[3]
+
+sensitivity = (tP/(tP+fP))*100
+
+falsePositives = (fP/(fP+tN))*100
+
+specificity = (tN/(tN+fP))*100
+
+falseNegatives = (fN/(fN+tP))*100
+
+print("The true positives rate (sensitivity) is", sensitivity, "%")
+
+print("The false positives rate is", falsePositives, "%")
+
+print("The true negatives rate (specificity) is", specificity, "%")
+
+print("The false negatives rate is", falseNegatives, "%")
+
+## POSITIVES AND NEGATIVES
+#truePositives = ((positivesNegatives(hemoglobin, glucose, classification, assignments)[0])/158)*100
+#falsePositives = ((positivesNegatives(hemoglobin, glucose, classification, assignments)[1])/158)*100
+#trueNegatives = ((positivesNegatives(hemoglobin, glucose, classification, assignments)[2])/158)*100
+#falseNegatives = ((positivesNegatives(hemoglobin, glucose, classification, assignments)[3])/158)*100
 
 
 ## IMPORT STATEMENTS
