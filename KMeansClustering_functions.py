@@ -37,7 +37,7 @@ def normalizeData(glucose, hemolobin, classification):
     classification = np.array(classification)
     return glucose_scaled, hemoglobin_scaled, classification
 
-def generateCentroids(number):
+def createCentroids(number):
 # takes a specified number from the user as a parameter 
 # uses a for loop to generate an array of new centroids, starting randomly at first
 # returns the new_centroids to be able to use for later functions
@@ -135,7 +135,7 @@ glucose, hemoglobin, classification = openckdfile()
 glucose_scaled, hemoglobin_scaled, classification = normalizeData(glucose, hemoglobin, classification)
 
 # GENERATE CENTROIDS
-new_centroids = generateCentroids(2)
+new_centroids = createCentroids(2)
 
 # CREATE ASSIGNMENTS
 assignments = assign(new_centroids, glucose_scaled, hemoglobin_scaled)

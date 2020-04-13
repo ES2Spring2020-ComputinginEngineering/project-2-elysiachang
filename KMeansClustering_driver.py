@@ -16,7 +16,7 @@ glucose, hemoglobin, classification = kmc.openckdfile()
 glucose_scaled, hemoglobin_scaled, classification = kmc.normalizeData(glucose, hemoglobin, classification)
 
 # GENERATE CENTROIDS
-new_centroids = kmc.generateCentroids(2)
+new_centroids = kmc.createCentroids(2)
 
 # CREATE ASSIGNMENTS
 assignments = kmc.assign(new_centroids, hemoglobin_scaled, glucose_scaled)
