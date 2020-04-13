@@ -1,21 +1,49 @@
+# ELYSIA CHANG
+# ES2 PROJECT 2
+# K-MEANS CLUSTERING DRIVER
+
+# ******************************
+
 #Please place your FUNCTION code for step 4 here.
+
 import KMeansClustering_functions as kmc #Use kmc to call your functions
 
-glucose, hemoglobin, classification = kmc.openckdfile() # what is the purpose of this driver
+glucose, hemoglobin, classification = kmc.openckdfile()
 
-glucose = (glucose-70)/(490-70)
-hemoglobin = (hemoglobin-3.1)/(17.8-3.1)
+glucose_scaled, hemoglobin_scaled, classification = kmc.normalizeData(glucose, hemoglobin, classification)
 
-centroids = kmc.select(10)
+new_centroids = kmc.generateCentroids(2)
 
-assignments = kmc.assign(centroids, hemoglobin, glucose)
+assignments = kmc.assign(new_centroids, hemoglobin_scaled, glucose_scaled)
 
-updates = kmc.update(assignments, hemoglobin, glucose, centroids)
+updated_centroids = kmc.update(assignments, glucose_scaled, hemoglobin_scaled, new_centroids)
 
-iterate_assignments = kmc.iterate(centroids)[0]
+assignments, updated_centroids = kmc.iterationData(assignments, updated_centroids)
 
-iterate_centroids = kmc.iterate(centroids)[1]
+kmc.graphingkMeans(glucose_scaled, hemoglobin_scaled, assignments, updated_centroids)
 
-kmc.graphingKMeans(glucose, hemoglobin, assignments, centroids)
+plusminus = kmc.positivesNegatives(classification, assignments)
 
-plusminus = kmc.positivesNegatives(hemoglobin, glucose, classification, assignments)
+truePositives = plusminus[0]
+
+falsePositives = plusminus[1]
+
+trueNegatives = plusminus[2]
+
+falseNegatives = plusminus[3]
+
+sensitivity = (truePositives/(truePositives+falsePositives))*100
+
+falsePositivesPercentage = (falsePositives/(falsePositives+trueNegatives))*100
+
+specificity = (trueNegatives/(trueNegatives+falsePositives))*100
+
+falseNegativesPercentage = (falseNegatives/(falseNegatives+truePositives))*100
+
+print("The true positives rate (sensitivity) is", sensitivity, "%")
+
+print("The false positives rate is", falsePositivesPercentage, "%")
+
+print("The true negatives rate (specificity) is", specificity, "%")
+
+print("The false negatives rate is", falseNegativesPercentage, "%")
