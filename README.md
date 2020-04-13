@@ -40,11 +40,11 @@ In the main script of this file, you will find graphs of both the Nearest Neighb
 
 2. In the "KMeansClustering_functions.py" file, you will find all the code for Step 4 of Project 2. This file contains the respective import statements at the top as well as 4 very important functions. These functions and their purposes are as follows:
 ```
-def generateCentroids(number)
+def generateCentroids(number):
 ```
 - select(): picks random points from the data to make as random centroids for first trial
 ```
-def assign(new_centroids, glucose_scaled, hemoglobin_scaled)
+def assign(new_centroids, glucose_scaled, hemoglobin_scaled):
 ```
 - reads through the ckd file and determines which data point is closest to whichever respective centroid
 ```
