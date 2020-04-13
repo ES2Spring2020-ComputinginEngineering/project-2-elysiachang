@@ -1,4 +1,4 @@
-# Please put your code for Step 2 and Step 3 in this file.
+# Please put your code for Step 2 and Step 3 in this file
 
 # iMPORT STATEMENTS
 import numpy as np
